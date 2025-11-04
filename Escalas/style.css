@@ -1,0 +1,231 @@
+/*Sistemas de variables por tema*/
+:root{
+  --hud-width-desktop: 400px;      
+  --hud-width-medium:  340px;      
+  --hud-radius: 16px;              
+  --tap-size: 44px;
+}
+
+html[data-theme="dark"]{
+  --bg:#000000;
+  --panel:#010f01;
+  --text:#e5e7eb;
+  --accent:#72946e;
+  --muted:#e4e4e4;
+  --line:#072c07;
+  --kbd-bg:#031602;
+  --tick:#d4dfd6;
+  --rule:#838383;
+  --rule2:#565756;
+}
+
+html[data-theme="light"]{
+  --bg:#ffffff;
+  --panel:#f1f0ef;
+  --text:#5c5c5c;
+  --accent:#8fa5c2;
+  --muted:#3d3c3b;
+  --line:#a0a5aa;
+  --kbd-bg:#ffffff;
+  --tick:#b1adad;
+  --rule:#767c85;
+  --rule2:#dde5f0;
+}
+
+/* Transiciones suaves */
+* { transition: background-color var(--transition), color var(--transition), border-color var(--transition); }
+
+body{
+  margin:0;
+  font-family:system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* Layout principal */
+#app{
+  display:grid;
+  grid-template-columns: var(--hud-width-desktop) 1fr;
+  height: 100vh;
+}
+aside{
+  background:var(--panel);
+  padding:16px;
+  border-right:1px solid var(--line);
+  overflow:auto;
+}
+#map{ height:100vh; width:100%; }
+
+/* Ajustes responsive desktop→tablet */
+@media (max-width: 700px){
+  #app{
+    grid-template-columns: 1fr;
+    height: 100svh; /* más estable en móviles modernos */
+  }
+
+  #map{
+    height: 100%;
+    width: 100%;
+  }
+
+  aside{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background: var(--panel);
+    border-top: 1px solid var(--line);
+    border-right: none;
+    border-bottom: none;
+
+    /* Ajustes clave */
+    height: auto;
+    min-height: 55svh; /* antes era 48svh */
+    max-height: 90svh;
+    border-top-left-radius: var(--hud-radius);
+    border-top-right-radius: var(--hud-radius);
+
+    padding: 16px;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 -8px 24px rgba(0,0,0,.25);
+
+    overflow-y: auto;
+    overflow-x: hidden;
+    transform: translateY(0);
+    transition: transform 220ms ease, height 220ms ease;
+    z-index: 1000;
+  }
+
+  /* Estado colapsado del sheet */
+  aside.sheet-collapsed {
+    transform: translateY(calc(100% - 72px - env(safe-area-inset-bottom, 0px)));
+  }
+
+  /* Barrita superior */
+  .mobile-grabber{
+    width: 52px;
+    height: 5px;
+    border-radius: 999px;
+    background: var(--line);
+    margin: 8px auto 12px;
+  }
+
+  /* Botón sheet */
+  .sheet-btn{
+    display: inline-grid;
+    place-items: center;
+    width: 36px;
+    height: 32px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--kbd-bg);
+    color: var(--text);
+  }
+
+  button, select{
+    min-height: var(--tap-size);
+  }
+
+  /* Escalas horizontales con scroll */
+  .scale-ribbon{
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 12px;
+    justify-content: flex-start;
+  }
+
+  .scale-item{ min-width: 72px; }
+  .scale-btn{ font-size: 13px; padding: 8px 12px; }
+
+  /* Controles de zoom más cómodos */
+  .leaflet-bottom.leaflet-right .leaflet-control{
+    margin-right: 12px;
+    margin-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* Zoom controls más cómodos en touch */
+.leaflet-touch .leaflet-control-zoom a{
+  width: 38px; height: 38px; line-height: 38px; font-size: 18px;
+}
+@media (max-width: 700px){
+  .leaflet-bottom.leaflet-right .leaflet-control{
+    margin-right: 12px;
+    margin-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* Tipografía y utilidades */
+h1{ font-size:18px; margin:0; }
+.sub{ color:var(--muted); font-size:12px; margin:8px 0 16px; }
+.muted{ color:var(--muted); }
+.stack{ display:grid; gap:8px; }
+.row{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+.row.between{ justify-content:space-between; align-items:center; }
+.hr{ height:1px; background:var(--line); margin:12px 0; }
+
+.title-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+.badge{
+  font-size:11px;
+  color:#fff;
+  background:var(--accent);
+  border-radius:999px;
+  padding:3px 8px;
+  text-decoration:none;
+  display:inline-block;
+}
+.badge:hover{ filter: brightness(1.2); }
+
+.kbd{
+  font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size:11px; background:var(--kbd-bg); border:1px solid var(--line);
+  padding:2px 6px; border-radius:6px;
+}
+
+button, select{
+  padding:8px 12px; border-radius:var(--radius); border:1px solid var(--line);
+  background:var(--kbd-bg); color:var(--text); cursor:pointer;
+}
+button:hover{ outline:1px solid var(--accent); }
+.theme-btn{ width:42px; height:36px; display:grid; place-items:center; }
+
+/* Cinta “regla” de escalas */
+.scale-ribbon{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:8px; padding:10px; border:1px solid var(--line); border-radius:var(--radius);
+  background:var(--kbd-bg); position:relative;
+}
+.scale-ribbon::before{
+  content:""; position:absolute; left:16px; right:16px; top:50%;
+  height:2px; background:linear-gradient(90deg, var(--rule), var(--rule2));
+  transform: translateY(-50%); pointer-events:none;
+}
+.scale-item{ position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:4px; }
+.scale-tick{ width:2px; height:14px; background:var(--tick); border-radius:2px; }
+.scale-btn{
+  padding:6px 10px; border-radius:10px; border:1px solid var(--line);
+  background:var(--kbd-bg); color:var(--text); cursor:pointer; font-size:12px;
+}
+.scale-btn.active{ outline:1px solid var(--accent); }
+
+/* Cursor-regla (tema claro por defecto) */
+#map.measuring{
+  cursor: crosshair;
+  cursor: url("data:image/svg+xml;utf8,\
+  <svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'>\
+    <rect x='2' y='14' width='28' height='4' rx='1' fill='%23e5e7eb' stroke='%230b1220' stroke-width='0.5'/>\
+    <line x1='4' y1='14' x2='4' y2='18' stroke='%230b1220' stroke-width='1'/>\
+    <line x1='8' y1='14' x2='8' y2='18' stroke='%230b1220' stroke-width='1'/>\
+    <line x1='12' y1='14' x2='12' y2='18' stroke='%230b1220' stroke-width='1'/>\
+    <line x1='16' y1='14' x2='16' y2='18' stroke='%230b1220' stroke-width='1'/>\
+    <line x1='20' y1='14' x2='20' y2='18' stroke='%230b1220' stroke-width='1'/>\
+    <line x1='24' y1='14' x2='24' y2='18' stroke='%230b1220' stroke-width='1'/>\
+    <line x1='28' y1='14' x2='28' y2='18' stroke='%230b1220' stroke-width='1'/>\
+  </svg>") 16 16, crosshair;
+}
