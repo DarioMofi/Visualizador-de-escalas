@@ -49,22 +49,15 @@ const map = L.map('map', {
 
 // Basemaps
 const basemaps = {
-  light: L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.{ext}', {
-	minZoom: 0,
-	maxZoom: 20,
-	attribution: 
-  ' &copy; <a href="https://www.stadiamaps.com/" target="_blank">StadiaMaps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">StreetMap</a>',
-	ext: 'png'
+  light: L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  subdomains: 'abcd',
+  maxZoom: 20,
+  attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
   }),
-  dark: L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.{ext}', {
-    minZoom: 0,
-    maxZoom: 20,
-    ext: 'png',
-    detectRetina: true,
-    attribution:
-      '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> ' +
-      '&copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> ' +
-      '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">StreetMap</a>'
+  dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  subdomains: 'abcd',
+  maxZoom: 20,
+  attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
   })
 };
 

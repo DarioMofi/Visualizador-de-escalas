@@ -8,12 +8,12 @@
 
 html[data-theme="dark"]{
   --bg:#000000;
-  --panel:#010f01;
+  --panel:#01030f;
   --text:#e5e7eb;
-  --accent:#72946e;
+  --accent:#6e7a94;
   --muted:#e4e4e4;
-  --line:#072c07;
-  --kbd-bg:#031602;
+  --line:#070e2c;
+  --kbd-bg:#020b16;
   --tick:#d4dfd6;
   --rule:#838383;
   --rule2:#565756;
