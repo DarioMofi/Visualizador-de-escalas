@@ -44,8 +44,11 @@ const map = L.map('map', {
   doubleClickZoom: false,
   zoomSnap: 0.01,
   zoomDelta: 0.25,
-  wheelPxPerZoomLevel: 120
+  wheelPxPerZoomLevel: 120,
+  zoomControl: false,
 });
+
+L.control.zoom({ position: 'topright' }).addTo(map);
 
 // Basemaps
 const basemaps = {
@@ -124,15 +127,24 @@ function clearMeasure(){
   measureLatLngs=[]; lenLabel.textContent='0 m';
   if(measureLine){ map.removeLayer(measureLine); measureLine=null; }
   measureMarkers.forEach(m=>map.removeLayer(m)); measureMarkers=[];
+  
 }
 
 document.getElementById('btnMeasure').addEventListener('click', ()=>{
   measuring = !measuring;
   document.getElementById('btnMeasure').classList.toggle('active', measuring);
   mapEl.classList.toggle('measuring', measuring); // ← activa el cursor-regla
-  if(measuring) clearMeasure();
 });
-document.getElementById('btnClear').addEventListener('click', clearMeasure);
+
+document.getElementById('btnClear').addEventListener('click', ()=>{
+    clearMeasure();
+    
+    if(measuring) {
+        measuring=false;
+        document.getElementById('btnMeasure').classList.remove('active');
+        mapEl.classList.remove('measuring');
+    }
+});
 
 map.on('click', (e)=>{
   if(!measuring) return;
