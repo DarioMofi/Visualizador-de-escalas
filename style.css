@@ -17,6 +17,10 @@ html[data-theme="dark"]{
   --tick:#d4dfd6;
   --rule:#838383;
   --rule2:#565756;
+  
+}
+.leaflet-container { 
+  background: #00000069; /* Fondo negro sólido para camuflar los bordes y las cargas */
 }
 
 html[data-theme="light"]{
@@ -214,6 +218,9 @@ button:hover{ outline:1px solid var(--accent); }
 }
 .scale-btn.active{ outline:1px solid var(--accent); }
 
+html[data-theme="dark"] .leaflet-tile {
+  filter: brightness(1.2) saturate(1.1) contrast(0.9) !important;
+}
 /* Cursor-regla (tema claro por defecto) */
 #map.measuring{
   cursor: crosshair;
